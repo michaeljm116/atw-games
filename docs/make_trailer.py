@@ -75,6 +75,18 @@ def main():
         default=TRAILER_DURATION,
         help=f"Maximum trailer duration in seconds (default: {TRAILER_DURATION})",
     )
+    parser.add_argument(
+        "--skip-first",
+        type=int,
+        default=0,
+        help="Skip first N seconds of each video (default: 0)",
+    )
+    parser.add_argument(
+        "--skip-last",
+        type=int,
+        default=0,
+        help="Skip last N seconds of each video (default: 0)",
+    )
     args = parser.parse_args()
 
     input_dir = Path(args.input)
@@ -101,9 +113,14 @@ def main():
     total = 0
     for clip in source_clips:
         dur = clip.duration
-        pos = 0
-        while pos < dur and total < args.max_duration:
-            seg_end = min(pos + args.clip_duration, dur)
+        start = args.skip_first
+        end = dur - args.skip_last
+        if start >= end:
+            print(f"  Skipping {clip.filename}: skip covers entire video")
+            continue
+        pos = start
+        while pos < end and total < args.max_duration:
+            seg_end = min(pos + args.clip_duration, end)
             seg = clip.subclipped(pos, seg_end)
             if len(segments) > 0:
                 seg = seg.with_effects([vfx.CrossFadeIn(FADE_DURATION)])
