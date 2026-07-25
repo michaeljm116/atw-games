@@ -79,8 +79,30 @@ export default function Home() {
         </div>
       </section>
 
-      {/* Screenshots */}
+      {/* Trailer */}
       <section className="py-24 px-4 bg-black">
+        <div className="max-w-4xl mx-auto">
+          <h2 className="text-3xl sm:text-4xl font-bold text-center mb-4">
+            Trailer
+          </h2>
+          <p className="text-zinc-400 text-center mb-12 max-w-lg mx-auto">
+            Gameplay captured from the raytraced Vulkan engine.
+          </p>
+          <div className="relative aspect-video rounded-lg overflow-hidden border border-zinc-800 bg-zinc-900">
+            <video
+              controls
+              playsInline
+              poster="/SteamMainCapsule-01.png"
+              className="w-full h-full"
+            >
+              <source src="/trailer.mp4" type="video/mp4" />
+            </video>
+          </div>
+        </div>
+      </section>
+
+      {/* Screenshots */}
+      <section className="py-24 px-4 bg-zinc-950">
         <div className="max-w-6xl mx-auto">
           <h2 className="text-3xl sm:text-4xl font-bold text-center mb-4">
             Screenshots
